@@ -1,0 +1,29 @@
+{
+ "manifest_version": 2,
+ "name": "Express crawler",
+ "description": "Download from express24",
+ "version": "1.0",
+ "browser_action": {
+  "default_popup": "expcrawler.html",
+  "default_icon": "express180.png"
+},
+"icons": {
+  "48": "express48.png",
+  "128": "express128.png"
+},
+"content_scripts": [
+  {
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["chrome/content.js"],
+    "run_at": "document_end"
+  }
+], 
+"permissions": [
+  "background",
+  "webRequest",
+  "webRequestBlocking",
+  "tabs",
+  "http://*/*",
+  "https://*/*"
+]
+}
