@@ -54,8 +54,8 @@ window.onload = function () {
 		let mainArray = [];
 		let businessType = [];
 
-		let businessName = $(`.sc-bZQynM`).text();
-		let businessLogo = $(`.sc-bxivhb`).css("background-image");
+		let businessName = $(`.sc-dnqmqq`).text();
+		let businessLogo = $(`.sc-bZQynM`).css("background-image");
 		let reduceFirst = businessLogo.replace('url("', "");
 		let reduceLast = reduceFirst.replace('")', "");
 		let filetitle = reduceLast.split("/").pop();
@@ -66,10 +66,10 @@ window.onload = function () {
 		//get length
 		let categorylen = $('.vnd-section_wrap').length;
 		let businessTypeUnique;
-		let typeLen = $(`.sc-dnqmqq`).length;
+		let typeLen = $(`.sc-gqjmRU`).length;
 		let b = 0;
 		for (b; b < typeLen; b++) {
-			businessTypeUnique = $(`.sc-dnqmqq:eq(${b})`).text();
+			businessTypeUnique = $(`.sc-gqjmRU:eq(${b})`).text();
 			businessType.push(businessTypeUnique);
 		}
 
@@ -80,7 +80,8 @@ window.onload = function () {
 			categoryname = $(`.vnd-section_wrap:eq(${j}) .section-title`).text()
 			categoryname = categoryname.trim();
 			itemlen = $(`.vnd-section_wrap:eq(${j}) .catalog-item_name`).length;
-			let productTitle, productPrice, clickSimulate, productImage, reduceProduct, reduceProductLast, imageTitle, attrTitle, attrlen, attrRadioLen, attrRadioTitle, attrRadioNextTitle, attrRadioNextLen, productAttrLabel, productAttr;
+			// let productTitle, productPrice, clickSimulate, productImage, reduceProduct, reduceProductLast, imageTitle, attrTitle, attrlen, attrRadioLen, attrRadioTitle, attrRadioNextTitle, attrRadioNextLen, productAttrLabel, productAttr;
+
 			function doSetTimeout(j, k) {
 				setTimeout(function () {
 
@@ -100,60 +101,55 @@ window.onload = function () {
 						filename: imageTitle
 					});
 					
-					
-					attrlen = $(`.md-item-form>div`).length;
-					if(attrlen === 3){
+					let productTitle, productPrice, clickSimulate, productImage, reduceProduct, reduceProductLast, imageTitle, attrTitle, attrlen, attrRadioLen, attrPrice, attrNextTitle, attrRadioTitle, attrRadioNextTitle, attrRadioNextLen;
+					let productAttrLabel = [];
+					let productAttr = [];
+					attrlen = $(`.md-item-form>div h4.form-group-title`).length;
+					if(attrlen === 2){
 				
 					for(let a = 0; a<attrlen; a++){
-
 						attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
-							
+						let attrArray = [];	
+						let smallObj;
 						attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
 						for(let z = 0; z<attrRadioLen; z++){
 						   attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
 						   $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
+						   attrArray.push(attrRadioTitle);
+						   console.log(attrArray);
+						   smallObj = {
+							[attrTitle]: attrArray
+						}
+						
+						console.log(productAttrLabel);
+						
+						let nextObj;
 						   let b = a+1;
 						   attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`).length;
 						   if(attrRadioNextLen>0){
 							for(let x = 0; x<attrRadioNextLen; x++){
-								attrRadioNextTitle = $(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).text().trim();
 								$(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).click();
+								attrNextTitle = $(`.md-item-form>div:eq(${b}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
+								attrRadioNextTitle = $(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).text().trim();
 
-								attrPrice = $(`.quantity-block .s8 span`).text().trim();
-								parseFloat(attrPrice.replace(/,/g, ''));
-								
-								productAttrLabel = {
-									[attrTitle]: {
-										
-									}
-								};
+
+									attrPrice = $(`.quantity-block .s8 span`).text().trim();
+									attrPrice = parseFloat(attrPrice.replace(/,/g, ''));
+									
+									console.log(attrPrice);
+							nextObj = {
+								[attrTitle]: attrRadioTitle,
+								[attrNextTitle]: attrRadioNextTitle,
+								"price": attrPrice
+							}
+							productAttr.push(nextObj);
 							}
 						   }
+						   
+						
 						}
-					}
-				} else if(attrlen === 2){
-					
-					for(let a = 0; a<attrlen; a++){
-
-						attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
-							
-						attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
-						for(let z = 0; z<attrRadioLen; z++){
-						   attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
-						   $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
-						   let b = a+1;
-						   attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`).length;
-						   if(attrRadioNextLen>0){
-							for(let x = 0; x<attrRadioNextLen; x++){
-								attrRadioNextTitle = $(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).text().trim();
-								$(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).click();
-
-								attrPrice = $(`.quantity-block .s8 span`).text().trim();
-								parseFloat(attrPrice.replace(/,/g, ''));
-								
-							}
-						   }
-						}
+						
+						productAttrLabel.push(smallObj);
 					}
 				}
 					
