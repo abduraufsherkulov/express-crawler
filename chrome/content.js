@@ -76,15 +76,23 @@ window.onload = function () {
 		let allproducts = $(`.catalog-item_name`).length;
 		let itemlen;
 		let categoryname;
-		for (let j = 0; j < categorylen; j++) {
+		let clear1, clear2, clear3;
+		
+		let j = 0;                     //  set your counter to 1
+
+		function myLoop () {           //  create a loop function
+		   clear1 = setTimeout(function () {    //  call a 3s setTimeout when the loop is called
 			categoryname = $(`.vnd-section_wrap:eq(${j}) .section-title`).text()
 			categoryname = categoryname.trim();
 			itemlen = $(`.vnd-section_wrap:eq(${j}) .catalog-item_name`).length;
 			// let productTitle, productPrice, clickSimulate, productImage, reduceProduct, reduceProductLast, imageTitle, attrTitle, attrlen, attrRadioLen, attrRadioTitle, attrRadioNextTitle, attrRadioNextLen, productAttrLabel, productAttr;
+			let productTitle, productPrice, clickSimulate, productImage, reduceProduct, reduceProductLast, imageTitle, attrTitle, attrlen, attrRadioLen, attrPrice, attrNextTitle, attrRadioTitle, attrRadioNextTitle, attrRadioNextLen;
 
-			function doSetTimeout(j, k) {
-				setTimeout(function () {
+			let k = 0;                     //  set your counter to 1
 
+			function myLoop2 () {           //  create a loop function
+			   clear2 = setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+				  	clearTimeout(clear1);
 					productTitle = $(`.vnd-section_wrap:eq(${j}) .catalog-item_name:eq(${k}) a`).text();
 
 					productPrice = $(`.vnd-section_wrap:eq(${j}) .catalog-item_price:eq(${k})`).text();
@@ -101,75 +109,110 @@ window.onload = function () {
 						filename: imageTitle
 					});
 					
-					let productTitle, productPrice, clickSimulate, productImage, reduceProduct, reduceProductLast, imageTitle, attrTitle, attrlen, attrRadioLen, attrPrice, attrNextTitle, attrRadioTitle, attrRadioNextTitle, attrRadioNextLen;
-					let productAttrLabel = [];
-					let productAttr = [];
+					setTimeout(() => {
+						clearTimeout(clear2);
 					attrlen = $(`.md-item-form>div h4.form-group-title`).length;
-					if(attrlen === 2){
-				
-					for(let a = 0; a<attrlen; a++){
-						attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
-						let attrArray = [];	
-						let smallObj;
-						attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
-						for(let z = 0; z<attrRadioLen; z++){
-						   attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
-						   $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
-						   attrArray.push(attrRadioTitle);
-						   console.log(attrArray);
-						   smallObj = {
-							[attrTitle]: attrArray
-						}
-						
-						console.log(productAttrLabel);
-						
-						let nextObj;
-						   let b = a+1;
-						   attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`).length;
-						   if(attrRadioNextLen>0){
-							for(let x = 0; x<attrRadioNextLen; x++){
-								$(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).click();
-								attrNextTitle = $(`.md-item-form>div:eq(${b}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
-								attrRadioNextTitle = $(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).text().trim();
-
-
-									attrPrice = $(`.quantity-block .s8 span`).text().trim();
-									attrPrice = parseFloat(attrPrice.replace(/,/g, ''));
-									
-									console.log(attrPrice);
-							nextObj = {
-								[attrTitle]: attrRadioTitle,
-								[attrNextTitle]: attrRadioNextTitle,
-								"price": attrPrice
-							}
-							productAttr.push(nextObj);
-							}
-						   }
-						   
-						
-						}
-						
-						productAttrLabel.push(smallObj);
-					}
-				}
+						delayer();
+					}, 2000);
 					
-					let obj = { businessName: businessName, businessType: businessType, businessLogo: filetitle, category: categoryname, productImage: imageTitle, productTitle: productTitle, productPrice: productPrice, 
-					productAttrLabel: productAttrLabel, productAttr: productAttr }
-					mainArray.push(obj);
+					function delayer(){
+						
+						let productAttrLabel = [];
+						let productAttr = [];
 
-					if (allproducts === mainArray.length) {
-						artoo.savePrettyJson(mainArray, `${businessName}.json`);
-						localStorage.setItem('crawlerTracker', +localStorage.getItem('crawlerTracker') + 1)
-						window.location.href = "https://express24.uz"
+						if(attrlen === 2){
+						
+						for(let a = 0; a<attrlen; a++){
+							attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
+							let attrArray = [];	
+							let smallObj;
+							attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
+							
+							for(let z = 0; z<attrRadioLen; z++){
+								attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
+								attrArray.push(attrRadioTitle);
+								console.log(attrArray);
+								smallObj = {
+								 [attrTitle]: attrArray
+							 }
+							} 
+							productAttrLabel.push(smallObj);
+						}
+							let a = 0;		
+							attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
+							attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
+							
+							for(let z = 0; z<attrRadioLen; z++){
+							   attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
+							   $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
+							
+							let nextObj;
+							   let b = 1;
+							   attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`).length;
+								for(let x = 0; x<attrRadioNextLen; x++){
+									$(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).click();
+									attrNextTitle = $(`.md-item-form>div:eq(${b}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
+									attrRadioNextTitle = $(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).text().trim();
+	
+	
+										attrPrice = $(`.quantity-block .s8 span`).text().trim();
+										attrPrice = parseFloat(attrPrice.replace(/,/g, ''));
+										
+										console.log(attrPrice);
+								nextObj = {
+									[attrTitle]: attrRadioTitle,
+									[attrNextTitle]: attrRadioNextTitle,
+									"price": attrPrice
+								}
+								productAttr.push(nextObj);
+								}
+							   
+							
+							}
+					} else if(attrlen === 1){
+	
+					} else if(attrlen === 0){
+	
 					}
+						
+						let obj = { businessName: businessName, businessType: businessType, businessLogo: filetitle, category: categoryname, productImage: imageTitle, productTitle: productTitle, productPrice: productPrice, 
+						productAttrLabel: productAttrLabel, productAttr: productAttr }
+						mainArray.push(obj);
+	
+						if (allproducts === mainArray.length) {
+							artoo.savePrettyJson(mainArray, `${businessName}.json`);
+							localStorage.setItem('crawlerTracker', +localStorage.getItem('crawlerTracker') + 1)
+							window.location.href = "https://express24.uz"
+						}
+						myLoopRest2()
+					}
+					function myLoopRest2(){
+						if (k < itemlen -1) {            //  if the counter < 10, call the loop function
+							k++;
+						   myLoop2();             //  ..  again which will trigger another 
+						} else {
+							myLoopRest();
+						} 
+					}
+						                     //  increment the counter
 
-				}, k * 1000);
+                      //  ..  setTimeout()
+			   }, 2000)
+			}
+			
+			myLoop2();
 
-			}
-			for (let k = 0; k < itemlen; k++) {
-				doSetTimeout(j, k);
-			}
+			function myLoopRest(){
+				j++;                     //  increment the counter
+				if (j < categorylen) {            //  if the counter < 10, call the loop function
+				   myLoop();             //  ..  again which will trigger another 
+				}    
+			}                    //  ..  setTimeout()
+		   }, 2000)
 		}
+		
+		myLoop();
+
 		}
 
 
