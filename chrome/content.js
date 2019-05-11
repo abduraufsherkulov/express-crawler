@@ -138,19 +138,32 @@ window.onload = function () {
 							} 
 							productAttrLabel.push(smallObj);
 						}
+						
 							let a = 0;		
 							attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
 							attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
-							
-							for(let z = 0; z<attrRadioLen; z++){
-							   attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
-							   $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
-							
-							let nextObj;
-							   let b = 1;
-							   attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`).length;
-								for(let x = 0; x<attrRadioNextLen; x++){
+
+
+							let z = 0;                     //  set your counter to 1
+
+							function myLoop3 () {           //  create a loop function
+								
+								$(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
+							clear3 = setTimeout(function () {    
+
+								attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
+							 
+							 let nextObj;
+								let b = 1;
+								attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`).length;
+
+								let x = 0;                     //  set your counter to 1
+
+								function myLoop4 () {           //  create a loop function
+									clearTimeout(clear3);
 									$(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).click();
+								setTimeout(function () {    
+
 									attrNextTitle = $(`.md-item-form>div:eq(${b}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
 									attrRadioNextTitle = $(`.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`).text().trim();
 	
@@ -165,14 +178,85 @@ window.onload = function () {
 									"price": attrPrice
 								}
 								productAttr.push(nextObj);
+									x++;                     //  increment the counter
+									if (x < attrRadioNextLen) {            
+										myLoop4();             //  ..  again which will trigger another 
+									} else if(x > attrRadioNextLen - 1 && z < attrRadioLen){
+										myLoopRest3();
+									}                    //  ..  setTimeout()
+								}, 500)
 								}
-							   
-							
+
+								myLoop4();
+								function myLoopRest3(){
+									z++;                     //  increment the counter
+									if (z < attrRadioLen) {      
+										myLoop3();             //  ..  again which will trigger another 
+									}  else {
+										myLoopRest2();
+									}
+								}                       //  ..  setTimeout()
+							}, 500)
 							}
+
+							myLoop3(); 
+							
 					} else if(attrlen === 1){
-	
+						
+						for(let a = 0; a<attrlen; a++){
+							attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
+							let attrArray = [];	
+							let smallObj;
+							attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
+							
+							for(let z = 0; z<attrRadioLen; z++){
+								attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
+								attrArray.push(attrRadioTitle);
+								console.log(attrArray);
+								smallObj = {
+								 [attrTitle]: attrArray
+							 }
+							} 
+							productAttrLabel.push(smallObj);
+						}
+						
+							let a = 0;		
+							attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`).text().trim().replace(/[\[\]*]+/g, '');
+							attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
+
+
+							let z = 0;                     //  set your counter to 1
+
+							function myLoop3 () {           //  create a loop function
+								
+								$(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).click();
+							clear3 = setTimeout(function () {    
+
+								attrRadioTitle = $(`.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`).text().trim();
+
+									
+								attrPrice = $(`.quantity-block .s8 span`).text().trim();
+								attrPrice = parseFloat(attrPrice.replace(/,/g, ''));
+
+								
+								nextObj = {
+									[attrTitle]: attrRadioTitle,
+									"price": attrPrice
+								}
+								productAttr.push(nextObj);
+
+									z++;                     //  increment the counter
+									if (z < attrRadioLen) {      
+										myLoop3();             //  ..  again which will trigger another 
+									}  else {
+										myLoopRest2();
+									}
+							}, 500)
+							}
+
+							myLoop3(); 
 					} else if(attrlen === 0){
-	
+						myLoopRest2()
 					}
 						
 						let obj = { businessName: businessName, businessType: businessType, businessLogo: filetitle, category: categoryname, productImage: imageTitle, productTitle: productTitle, productPrice: productPrice, 
@@ -184,13 +268,12 @@ window.onload = function () {
 							localStorage.setItem('crawlerTracker', +localStorage.getItem('crawlerTracker') + 1)
 							window.location.href = "https://express24.uz"
 						}
-						myLoopRest2()
 					}
 					function myLoopRest2(){
-						if (k < itemlen -1) {            //  if the counter < 10, call the loop function
-							k++;
+						k++;
+						if (k < itemlen) {            //  if the counter < 10, call the loop function
 						   myLoop2();             //  ..  again which will trigger another 
-						} else {
+						} else if( k > itemlen-1 && j < categorylen) {
 							myLoopRest();
 						} 
 					}
