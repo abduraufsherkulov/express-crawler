@@ -7784,7 +7784,7 @@ window.onload = function() {
       let allproducts = $(`.catalog-item_name`).length;
       let itemlen;
       let categoryname;
-      let clear1, clear2, clear3, clear4;
+      let clear1, clear2, clear3, clear4, clear5;
 
       let j = 0; //  set your counter to 1
 
@@ -7800,6 +7800,8 @@ window.onload = function() {
             productPrice,
             clickSimulate,
             productImage,
+            productDesc,
+            productPackage,
             reduceProduct,
             reduceProductLast,
             imageTitle,
@@ -7813,6 +7815,9 @@ window.onload = function() {
             attrRadioNextLen,
             attrPostNextTitle,
             attrPostRadioNextTitle,
+            attrPrePostRadioNextLen,
+            attrPrePostNextTitle,
+            attrPrePostRadioNextTitle,
             attrPostRadioNextLen;
 
           let k = 0; //  set your counter to 1
@@ -7835,6 +7840,7 @@ window.onload = function() {
               clickSimulate = $(
                 `.vnd-section_wrap:eq(${j}) .blur-content:eq(${k})`
               ).click();
+
               productImage = $(`.md-item-slider_img`).css("background-image");
               reduceProduct = productImage.replace('url("', "");
               reduceProductLast = reduceProduct.replace('")', "");
@@ -7846,6 +7852,8 @@ window.onload = function() {
 
               setTimeout(() => {
                 clearTimeout(clear2);
+                productDesc = $(".md-item-desc-text").text();
+                productDesc = productDesc.split("\r\n");
                 attrlen = $(`.md-item-form>div h4.form-group-title`).length;
                 delayer();
               }, 2000);
@@ -7874,9 +7882,21 @@ window.onload = function() {
                         .trim();
                       attrArray.push(attrRadioTitle);
                       console.log(attrArray);
-                      smallObj = {
-                        [attrTitle]: attrArray
-                      };
+                      let trueness = [];
+                      for (let v = 0; v < productAttrLabel.length; v++) {
+                        if (productAttrLabel[v][attrTitle] === undefined) {
+                          trueness.push(1);
+                        }
+                      }
+                      if (productAttrLabel.length === trueness.length) {
+                        smallObj = {
+                          [attrTitle]: attrArray
+                        };
+                      } else {
+                        smallObj = {
+                          [`${attrTitle} 2`]: attrArray
+                        };
+                      }
                     }
                     productAttrLabel.push(smallObj);
                   }
@@ -7935,11 +7955,19 @@ window.onload = function() {
                           attrPrice = parseFloat(attrPrice.replace(/,/g, ""));
 
                           console.log(attrPrice);
-                          nextObj = {
-                            [attrTitle]: attrRadioTitle,
-                            [attrNextTitle]: attrRadioNextTitle,
-                            price: attrPrice
-                          };
+                          if (attrTitle === attrNextTitle) {
+                            nextObj = {
+                              [attrTitle]: attrRadioTitle,
+                              [`${attrNextTitle} 2`]: attrRadioNextTitle,
+                              price: attrPrice
+                            };
+                          } else {
+                            nextObj = {
+                              [attrTitle]: attrRadioTitle,
+                              [attrNextTitle]: attrRadioNextTitle,
+                              price: attrPrice
+                            };
+                          }
                           productAttr.push(nextObj);
                           x++; //  increment the counter
                           if (x < attrRadioNextLen) {
@@ -8058,9 +8086,21 @@ window.onload = function() {
                         .trim();
                       attrArray.push(attrRadioTitle);
                       console.log(attrArray);
-                      smallObj = {
-                        [attrTitle]: attrArray
-                      };
+                      let trueness = [];
+                      for (let v = 0; v < productAttrLabel.length; v++) {
+                        if (productAttrLabel[v][attrTitle] === undefined) {
+                          trueness.push(1);
+                        }
+                      }
+                      if (productAttrLabel.length === trueness.length) {
+                        smallObj = {
+                          [attrTitle]: attrArray
+                        };
+                      } else {
+                        smallObj = {
+                          [`${attrTitle} 2`]: attrArray
+                        };
+                      }
                     }
                     productAttrLabel.push(smallObj);
                   }
@@ -8151,12 +8191,35 @@ window.onload = function() {
                               );
 
                               console.log(attrPrice);
-                              nextObj = {
-                                [attrTitle]: attrRadioTitle,
-                                [attrNextTitle]: attrRadioNextTitle,
-                                [attrPostNextTitle]: attrPostRadioNextTitle,
-                                price: attrPrice
-                              };
+                              if (attrTitle === attrNextTitle) {
+                                nextObj = {
+                                  [attrTitle]: attrRadioTitle,
+                                  [`${attrNextTitle} 2`]: attrRadioNextTitle,
+                                  [attrPostNextTitle]: attrPostRadioNextTitle,
+                                  price: attrPrice
+                                };
+                              } else if (attrTitle === attrPostNextTitle) {
+                                nextObj = {
+                                  [attrTitle]: attrRadioTitle,
+                                  [attrNextTitle]: attrRadioNextTitle,
+                                  [`${attrPostNextTitle} 2`]: attrPostRadioNextTitle,
+                                  price: attrPrice
+                                };
+                              } else if (attrNextTitle === attrPostNextTitle) {
+                                nextObj = {
+                                  [attrTitle]: attrRadioTitle,
+                                  [attrNextTitle]: attrRadioNextTitle,
+                                  [`${attrPostNextTitle} 2`]: attrPostRadioNextTitle,
+                                  price: attrPrice
+                                };
+                              } else {
+                                nextObj = {
+                                  [attrTitle]: attrRadioTitle,
+                                  [attrNextTitle]: attrRadioNextTitle,
+                                  [attrPostNextTitle]: attrPostRadioNextTitle,
+                                  price: attrPrice
+                                };
+                              }
                               productAttr.push(nextObj);
 
                               q++; //  increment the counter
@@ -8201,6 +8264,288 @@ window.onload = function() {
                   }
 
                   myLoop3();
+                } else if (attrlen === 4) {
+                  for (let a = 0; a < attrlen; a++) {
+                    attrTitle = $(
+                      `.md-item-form>div:eq(${a}) .form-group-title`
+                    )
+                      .text()
+                      .trim()
+                      .replace(/[\[\]*]+/g, "");
+                    let attrArray = [];
+                    let smallObj;
+                    attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
+
+                    for (let z = 0; z < attrRadioLen; z++) {
+                      attrRadioTitle = $(
+                        `.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`
+                      )
+                        .text()
+                        .trim();
+                      attrArray.push(attrRadioTitle);
+                      console.log(attrArray);
+                      let trueness = [];
+                      for (let v = 0; v < productAttrLabel.length; v++) {
+                        if (productAttrLabel[v][attrTitle] === undefined) {
+                          trueness.push(1);
+                        }
+                      }
+                      if (productAttrLabel.length === trueness.length) {
+                        smallObj = {
+                          [attrTitle]: attrArray
+                        };
+                      } else {
+                        smallObj = {
+                          [`${attrTitle} 2`]: attrArray
+                        };
+                      }
+                    }
+                    productAttrLabel.push(smallObj);
+                  }
+
+                  let a = 0;
+                  attrTitle = $(`.md-item-form>div:eq(${a}) .form-group-title`)
+                    .text()
+                    .trim()
+                    .replace(/[\[\]*]+/g, "");
+                  attrRadioLen = $(`.md-item-form>div:eq(${a}) ul li`).length;
+
+                  let z = 0; //  set your counter to 1
+
+                  function myLoop3() {
+                    //  create a loop function
+
+                    $(
+                      `.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`
+                    ).click();
+                    clear3 = setTimeout(function() {
+                      attrRadioTitle = $(
+                        `.md-item-form>div:eq(${a}) ul li:eq(${z}) .l7 p label`
+                      )
+                        .text()
+                        .trim();
+
+                      let b = 1;
+                      attrRadioNextLen = $(`.md-item-form>div:eq(${b}) ul li`)
+                        .length;
+
+                      let x = 0; //  set your counter to 1
+
+                      function myLoop4() {
+                        //  create a loop function
+                        clearTimeout(clear3);
+                        $(
+                          `.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`
+                        ).click();
+                        clear4 = setTimeout(function() {
+                          attrNextTitle = $(
+                            `.md-item-form>div:eq(${b}) .form-group-title`
+                          )
+                            .text()
+                            .trim()
+                            .replace(/[\[\]*]+/g, "");
+                          attrRadioNextTitle = $(
+                            `.md-item-form>div:eq(${b}) ul li:eq(${x}) .l7 p label`
+                          )
+                            .text()
+                            .trim();
+
+                          let c = 2;
+
+                          let q = 0; //  set your counter to 1
+
+                          attrPostRadioNextLen = $(
+                            `.md-item-form>div:eq(${c}) ul li`
+                          ).length;
+
+                          function myLoop5() {
+                            //  create a loop function
+                            clearTimeout(clear4);
+
+                            $(
+                              `.md-item-form>div:eq(${c}) ul li:eq(${q}) .l7 p label`
+                            ).click();
+                            clear5 = setTimeout(function() {
+                              //  call a 3s setTimeout when the loop is called
+
+                              attrPostNextTitle = $(
+                                `.md-item-form>div:eq(${c}) .form-group-title`
+                              )
+                                .text()
+                                .trim()
+                                .replace(/[\[\]*]+/g, "");
+                              attrPostRadioNextTitle = $(
+                                `.md-item-form>div:eq(${c}) ul li:eq(${q}) .l7 p label`
+                              )
+                                .text()
+                                .trim();
+
+                              let nextObj;
+
+                              let m = 3;
+                              let g = 0; //  set your counter to 1
+
+                              attrPrePostRadioNextLen = $(
+                                `.md-item-form>div:eq(${m}) ul li`
+                              ).length;
+
+                              function myLoop6() {
+                                //  create a loop function
+                                clearTimeout(clear5);
+                                $(
+                                  `.md-item-form>div:eq(${m}) ul li:eq(${g}) .l7 p label`
+                                ).click();
+                                setTimeout(function() {
+                                  //  call a 3s setTimeout when the loop is called
+
+                                  attrPrePostNextTitle = $(
+                                    `.md-item-form>div:eq(${m}) .form-group-title`
+                                  )
+                                    .text()
+                                    .trim()
+                                    .replace(/[\[\]*]+/g, "");
+
+                                  attrPrePostRadioNextTitle = $(
+                                    `.md-item-form>div:eq(${m}) ul li:eq(${g}) .l7 p label`
+                                  )
+                                    .text()
+                                    .trim();
+
+                                  attrPrice = $(`.quantity-block .s8 span`)
+                                    .text()
+                                    .trim();
+
+                                  attrPrice = parseFloat(
+                                    attrPrice.replace(/,/g, "")
+                                  );
+
+                                  console.log(attrPrice);
+                                  if (attrTitle === attrNextTitle) {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [`${attrNextTitle} 2`]: attrRadioNextTitle,
+                                      [attrPostNextTitle]: attrPostRadioNextTitle,
+                                      [attrPrePostNextTitle]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  } else if (attrTitle === attrPostNextTitle) {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [attrNextTitle]: attrRadioNextTitle,
+                                      [`${attrPostNextTitle} 2`]: attrPostRadioNextTitle,
+                                      [attrPrePostNextTitle]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  } else if (
+                                    attrTitle === attrPrePostNextTitle
+                                  ) {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [attrNextTitle]: attrRadioNextTitle,
+                                      [attrPostNextTitle]: attrPostRadioNextTitle,
+                                      [`${attrPrePostNextTitle} 2`]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  } else if (
+                                    attrNextTitle === attrPostNextTitle
+                                  ) {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [attrNextTitle]: attrRadioNextTitle,
+                                      [`${attrPostNextTitle} 2`]: attrPostRadioNextTitle,
+                                      [attrPrePostNextTitle]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  } else if (
+                                    attrNextTitle === attrPrePostNextTitle
+                                  ) {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [attrNextTitle]: attrRadioNextTitle,
+                                      [attrPostNextTitle]: attrPostRadioNextTitle,
+                                      [`${attrPrePostNextTitle} 2`]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  } else if (
+                                    attrPostNextTitle === attrPrePostNextTitle
+                                  ) {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [attrNextTitle]: attrRadioNextTitle,
+                                      [attrPostNextTitle]: attrPostRadioNextTitle,
+                                      [`${attrPrePostNextTitle} 2`]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  } else {
+                                    nextObj = {
+                                      [attrTitle]: attrRadioTitle,
+                                      [attrNextTitle]: attrRadioNextTitle,
+                                      [attrPostNextTitle]: attrPostRadioNextTitle,
+                                      [attrPrePostNextTitle]: attrPrePostRadioNextTitle,
+                                      price: attrPrice
+                                    };
+                                  }
+                                  productAttr.push(nextObj);
+
+                                  g++; //  increment the counter
+                                  if (g < attrPrePostRadioNextLen) {
+                                    //  if the counter < 10, call the loop function
+                                    myLoop6(); //  ..  again which will trigger another
+                                  } else if (
+                                    g > attrPrePostRadioNextLen - 1 &&
+                                    q < attrPostRadioNextLen
+                                  ) {
+                                    myLoopRest5();
+                                  } //  ..  setTimeout()
+                                }, 500);
+                              }
+
+                              myLoop6();
+
+                              function myLoopRest5() {
+                                q++; //  increment the counter
+                                if (q < attrPostRadioNextLen) {
+                                  //  if the counter < 10, call the loop function
+                                  myLoop5(); //  ..  again which will trigger another
+                                } else if (
+                                  q > attrPostRadioNextLen - 1 &&
+                                  x < attrRadioNextLen
+                                ) {
+                                  myLoopRest4();
+                                } //  ..  setTimeout()
+                              }
+                            }, 500);
+                          }
+
+                          myLoop5();
+
+                          function myLoopRest4() {
+                            x++; //  increment the counter
+                            if (x < attrRadioNextLen) {
+                              myLoop4(); //  ..  again which will trigger another
+                            } else if (
+                              x > attrRadioNextLen - 1 &&
+                              z < attrRadioLen
+                            ) {
+                              myLoopRest3();
+                            }
+                          } //  ..  setTimeout()
+                        }, 500);
+                      }
+
+                      myLoop4();
+                      function myLoopRest3() {
+                        z++; //  increment the counter
+                        if (z < attrRadioLen) {
+                          myLoop3(); //  ..  again which will trigger another
+                        } else {
+                          myLoopRest2();
+                        }
+                      } //  ..  setTimeout()
+                    }, 500);
+                  }
+
+                  myLoop3();
                 }
 
                 let obj = {
@@ -8209,6 +8554,8 @@ window.onload = function() {
                   businessLogo: filetitle,
                   category: categoryname,
                   productImage: imageTitle,
+                  productDesc: productDesc,
+                  productPackage: productPackage,
                   productTitle: productTitle,
                   productPrice: productPrice,
                   productAttrLabel: productAttrLabel,
