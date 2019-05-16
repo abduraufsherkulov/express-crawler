@@ -8139,6 +8139,9 @@ window.onload = function() {
       let businessLogo = $(`.sc-bZQynM`).css("background-image");
       let reduceFirst = businessLogo.replace('url("', "");
       let reduceLast = reduceFirst.replace('")', "");
+      if(reduceLast.includes("https://www.")){
+        reduceLast = reduceLast.replace("https://www.", "https://");
+      }
       let filetitle = reduceLast.split("/").pop();
       artoo.saveResource(reduceLast, {
         filename: filetitle
@@ -8217,6 +8220,9 @@ window.onload = function() {
               productImage = $(`.md-item-slider_img`).css("background-image");
               reduceProduct = productImage.replace('url("', "");
               reduceProductLast = reduceProduct.replace('")', "");
+              if(reduceProductLast.includes("https://www.")){
+                reduceProductLast = reduceProductLast.replace("https://www.", "https://");
+              }
               imageTitle = reduceProductLast.split("/").pop();
 
               artoo.saveResource(reduceProductLast, {
