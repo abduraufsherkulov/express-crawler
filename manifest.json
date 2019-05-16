@@ -22,8 +22,10 @@
   "background",
   "webRequest",
   "webRequestBlocking",
+  "webNavigation",
   "tabs",
   "http://*/*",
-  "https://*/*"
+  "https://*/*",
+  "storage"
 ]
 }

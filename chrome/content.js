@@ -7739,13 +7739,386 @@ window.onload = function() {
         done: function() {
           console.log("expanded");
           //getLister
-          niceList = artoo.scrape(
-            "div.partners-item.valign-wrapper.false .full-vnitem-link_sm",
-            {
-              url: "href"
-            }
-          );
+          // niceList = artoo.scrape(
+          //   "div.partners-item.valign-wrapper.false .full-vnitem-link_sm",
+          //   {
+          //     url: "href"
+          //   }
+          // );
+          niceList = [
+  {
+    "url": "/vendors/971/"
+  },
+  {
+    "url": "/vendors/635/"
+  },
+  {
+    "url": "/vendors/1218/"
+  },
+  {
+    "url": "/vendors/1632/"
+  },
+  {
+    "url": "/vendors/1616/"
+  },
+  {
+    "url": "/vendors/489/"
+  },
+  {
+    "url": "/vendors/566/"
+  },
+  {
+    "url": "/vendors/561/"
+  },
+  {
+    "url": "/vendors/551/"
+  },
+  {
+    "url": "/vendors/474/"
+  },
+  {
+    "url": "/vendors/451/"
+  },
+  {
+    "url": "/vendors/1478/"
+  },
+  {
+    "url": "/vendors/1481/"
+  },
+  {
+    "url": "/vendors/1607/"
+  },
+  {
+    "url": "/vendors/1828/"
+  },
+  {
+    "url": "/vendors/2007/"
+  },
+  {
+    "url": "/vendors/2007/"
+  },
+  {
+    "url": "/vendors/1083/"
+  },
+  {
+    "url": "/vendors/90/"
+  },
+  {
+    "url": "/vendors/1921/"
+  },
+  {
+    "url": "/vendors/743/"
+  },
+  {
+    "url": "/vendors/1990/"
+  },
+  {
+    "url": "/vendors/542/"
+  },
+  {
+    "url": "/vendors/1038/"
+  },
+  {
+    "url": "/vendors/97/"
+  },
+  {
+    "url": "/vendors/1037/"
+  },
+  {
+    "url": "/vendors/1036/"
+  },
+  {
+    "url": "/vendors/1003/"
+  },
+  {
+    "url": "/vendors/1025/"
+  },
+  {
+    "url": "/vendors/1587/"
+  },
+  {
+    "url": "/vendors/530/"
+  },
+  {
+    "url": "/vendors/1288/"
+  },
+  {
+    "url": "/vendors/95/"
+  },
+  {
+    "url": "/vendors/1741/"
+  },
+  {
+    "url": "/vendors/256/"
+  },
+  {
+    "url": "/vendors/669/"
+  },
+  {
+    "url": "/vendors/1770/"
+  },
+  {
+    "url": "/vendors/1326/"
+  },
+  {
+    "url": "/vendors/1493/"
+  },
+  {
+    "url": "/vendors/1940/"
+  },
+  {
+    "url": "/vendors/1756/"
+  },
+  {
+    "url": "/vendors/1455/"
+  },
+  {
+    "url": "/vendors/1321/"
+  },
+  {
+    "url": "/vendors/1268/"
+  },
+  {
+    "url": "/vendors/630/"
+  },
+  {
+    "url": "/vendors/294/"
+  },
+  {
+    "url": "/vendors/592/"
+  },
+  {
+    "url": "/vendors/649/"
+  },
+  {
+    "url": "/vendors/1666/"
+  },
+  {
+    "url": "/vendors/1721/"
+  },
+  {
+    "url": "/vendors/874/"
+  },
+  {
+    "url": "/vendors/1515/"
+  },
+  {
+    "url": "/vendors/737/"
+  },
+  {
+    "url": "/vendors/166/"
+  },
+  {
+    "url": "/vendors/174/"
+  },
+  {
+    "url": "/vendors/1775/"
+  },
+  {
+    "url": "/vendors/696/"
+  },
+  {
+    "url": "/vendors/1948/"
+  },
+  {
+    "url": "/vendors/1124/"
+  },
+  {
+    "url": "/vendors/1869/"
+  },
+  {
+    "url": "/vendors/856/"
+  },
+  {
+    "url": "/vendors/932/"
+  },
+  {
+    "url": "/vendors/613/"
+  },
+  {
+    "url": "/vendors/571/"
+  },
+  {
+    "url": "/vendors/1862/"
+  },
+  {
+    "url": "/vendors/1707/"
+  },
+  {
+    "url": "/vendors/1232/"
+  },
+  {
+    "url": "/vendors/1878/"
+  },
+  {
+    "url": "/vendors/756/"
+  },
+  {
+    "url": "/vendors/1164/"
+  },
+  {
+    "url": "/vendors/119/"
+  },
+  {
+    "url": "/vendors/985/"
+  },
+  {
+    "url": "/vendors/1522/"
+  },
+  {
+    "url": "/vendors/1459/"
+  },
+  {
+    "url": "/vendors/506/"
+  },
+  {
+    "url": "/vendors/117/"
+  },
+  {
+    "url": "/vendors/374/"
+  },
+  {
+    "url": "/vendors/996/"
+  },
+  {
+    "url": "/vendors/1340/"
+  },
+  {
+    "url": "/vendors/1314/"
+  },
+  {
+    "url": "/vendors/1831/"
+  },
+  {
+    "url": "/vendors/1646/"
+  },
+  {
+    "url": "/vendors/1413/"
+  },
+  {
+    "url": "/vendors/1245/"
+  },
+  {
+    "url": "/vendors/2013/"
+  },
+  {
+    "url": "/vendors/740/"
+  },
+  {
+    "url": "/vendors/1910/"
+  },
+  {
+    "url": "/vendors/1128/"
+  },
+  {
+    "url": "/vendors/1850/"
+  },
+  {
+    "url": "/vendors/908/"
+  },
+  {
+    "url": "/vendors/1977/"
+  },
+  {
+    "url": "/vendors/1759/"
+  },
+  {
+    "url": "/vendors/1655/"
+  },
+  {
+    "url": "/vendors/1720/"
+  },
+  {
+    "url": "/vendors/1387/"
+  },
+  {
+    "url": "/vendors/1199/"
+  },
+  {
+    "url": "/vendors/1996/"
+  },
+  {
+    "url": "/vendors/2001/"
+  },
+  {
+    "url": "/vendors/1440/"
+  },
+  {
+    "url": "/vendors/1369/"
+  },
+  {
+    "url": "/vendors/1793/"
+  },
+  {
+    "url": "/vendors/868/"
+  },
+  {
+    "url": "/vendors/1799/"
+  },
+  {
+    "url": "/vendors/1359/"
+  },
+  {
+    "url": "/vendors/848/"
+  },
+  {
+    "url": "/vendors/951/"
+  },
+  {
+    "url": "/vendors/1565/"
+  },
+  {
+    "url": "/vendors/1841/"
+  },
+  {
+    "url": "/vendors/1138/"
+  },
+  {
+    "url": "/vendors/1213/"
+  },
+  {
+    "url": "/vendors/1330/"
+  },
+  {
+    "url": "/vendors/728/"
+  },
+  {
+    "url": "/vendors/719/"
+  },
+  {
+    "url": "/vendors/1114/"
+  },
+  {
+    "url": "/vendors/1597/"
+  },
+  {
+    "url": "/vendors/1976/"
+  },
+  {
+    "url": "/vendors/1906/"
+  },
+  {
+    "url": "/vendors/1035/"
+  },
+  {
+    "url": "/vendors/1953/"
+  },
+  {
+    "url": "/vendors/462/"
+  },
+  {
+    "url": "/vendors/1055/"
+  },
+  {
+    "url": "/vendors/1292/"
+  },
+  {
+    "url": "/vendors/798/"
+  }
+]
+
           const j = niceList.length;
+
           let url;
           for (let i = 0; i < j; i++) {
             let n = niceList[i].url;
